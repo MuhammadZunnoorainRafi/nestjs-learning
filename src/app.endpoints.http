@@ -1,0 +1,2 @@
+# GET endpoints of "app" controller
+GET http://localhost:3000
