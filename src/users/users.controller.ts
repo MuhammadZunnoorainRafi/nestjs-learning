@@ -2,25 +2,36 @@ import {
   Body,
   Controller,
   Get,
-  Headers,
-  Ip,
   Param,
+  Patch,
   Post,
   Query,
 } from '@nestjs/common';
+import { CreateUserDto } from './dtos/create-user.dto';
+import { GetUserParamsDto } from './dtos/get-user-params.dto';
+import { PatchUserDto } from './dtos/patch-user.dto';
 
 // http://localhost:3000/users
 @Controller('users')
 export class UsersController {
-  @Get('/:id')
-  getUsers(@Param('id') id: any, @Query('limit') limit: any) {
-    console.log({ id, limit });
+  @Get('/:id?')
+  getUsers(
+    @Param() getUserParamsDto: GetUserParamsDto,
+    @Query('limit') limit: any,
+  ) {
+    console.log({ getUserParamsDto, limit });
     return 'Get request for users controller';
   }
 
   @Post()
-  postUsers(@Body() request: any, @Headers() header: any, @Ip() ip: any) {
-    console.log(request, header, ip);
-    return 'Post request for users controller';
+  postUsers(@Body() createUserDto: CreateUserDto) {
+    console.log(createUserDto);
+    return createUserDto;
+  }
+
+  @Patch()
+  patchUsers(@Body() patchUserDto: PatchUserDto) {
+    console.log(patchUserDto);
+    return patchUserDto;
   }
 }
