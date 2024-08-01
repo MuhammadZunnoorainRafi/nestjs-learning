@@ -19,12 +19,18 @@ import { UsersService } from './providers/users.service';
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
   @Get('/:id?')
-  getUsers(
+  getAll(
     @Param() getUserParamsDto: GetUserParamsDto,
     @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit: number,
     @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
   ) {
-    return this.usersService.getUserAll(getUserParamsDto, limit, page);
+    return this.usersService.findAll(getUserParamsDto, limit, page);
+  }
+
+  getOne(@Param() getUserParamsDto: GetUserParamsDto) {
+    if (getUserParamsDto.id) {
+      return this.usersService.findOneById(getUserParamsDto.id);
+    }
   }
 
   @Post()
