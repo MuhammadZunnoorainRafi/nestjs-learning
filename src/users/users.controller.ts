@@ -27,12 +27,6 @@ export class UsersController {
     return this.usersService.findAll(getUserParamsDto, limit, page);
   }
 
-  getOne(@Param() getUserParamsDto: GetUserParamsDto) {
-    if (getUserParamsDto.id) {
-      return this.usersService.findOneById(getUserParamsDto.id);
-    }
-  }
-
   @Post()
   postUsers(@Body() createUserDto: CreateUserDto) {
     console.log(createUserDto);
