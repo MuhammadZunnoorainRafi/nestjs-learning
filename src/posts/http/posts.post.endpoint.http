@@ -1,0 +1,15 @@
+POST http://localhost:3000/posts/new
+Content-Type:application/json
+
+{
+"title":"New Post",
+"slug":"new-post-slug",
+"content":"Post Content",
+"schema":"Post Schema",
+"featuredImageUrl":"Post Image URL",
+"postType":"POST",
+"status":"REVIEW",
+"publishedOn":"2024-08-06T11:49:31.394Z",
+"tags":["one","two"],
+"metaOptions":[{"key":"value"}]
+}
