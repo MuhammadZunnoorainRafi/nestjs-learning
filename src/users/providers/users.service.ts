@@ -15,7 +15,6 @@ export class UsersService {
     limit: number,
   ) {
     const user = this.authService.isAuth();
-    console.log(typeof getUserParamsDto.id);
     return [
       { name: 'John', email: 'johndoe@gmail.com' },
       { name: 'Tom', email: 'tom@gmail.com' },
