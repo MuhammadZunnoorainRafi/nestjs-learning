@@ -5,6 +5,7 @@ import { UsersModule } from './users/users.module';
 import { PostsModule } from './posts/posts.module';
 import { AuthModule } from './auth/auth.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { Users } from './users/user.entity';
 
 @Module({
   imports: [
@@ -13,16 +14,14 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     AuthModule,
     TypeOrmModule.forRootAsync({
       useFactory: () => ({
-        imports: [],
-        inject: [],
         type: 'postgres',
-        entities: [],
+        entities: [Users],
         synchronize: true,
-        database: process.env.DATABASE_NAME,
-        host: process.env.DATABASE_HOST,
-        port: +process.env.DATABASE_PORT,
-        username: process.env.DATABASE_USER,
-        password: String(process.env.DATABASE_PASSWORD),
+        database: 'nestjs-blog',
+        host: 'localhost',
+        port: 5432,
+        username: 'postgres',
+        password: '...ROOT&GROOT...123',
       }),
     }),
   ],
