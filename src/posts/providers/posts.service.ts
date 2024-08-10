@@ -1,9 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import { UsersService } from 'src/users/providers/users.service';
+import { Repository } from 'typeorm';
+import { Posts } from '../post.entity';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class PostsService {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(
+    private readonly usersService: UsersService,
+    @InjectRepository(Posts)
+    private postRepository: Repository<Posts>,
+  ) {}
   findAll(userId: string) {
     const user = this.usersService.findOneById(userId);
     return [

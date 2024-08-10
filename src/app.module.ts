@@ -6,16 +6,20 @@ import { PostsModule } from './posts/posts.module';
 import { AuthModule } from './auth/auth.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Users } from './users/user.entity';
+import { TagsModule } from './tags/tags.module';
+import { MetaOptionsModule } from './meta-options/meta-options.module';
 
 @Module({
   imports: [
     UsersModule,
     PostsModule,
     AuthModule,
+    TagsModule,
+    MetaOptionsModule,
     TypeOrmModule.forRootAsync({
       useFactory: () => ({
         type: 'postgres',
-        entities: [Users],
+        autoLoadEntities: true,
         synchronize: true,
         database: 'nestjs-blog',
         host: 'localhost',
