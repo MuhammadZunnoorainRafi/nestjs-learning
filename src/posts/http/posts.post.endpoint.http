@@ -15,10 +15,7 @@ Content-Type: application/json
     "nestJS",
     "typescript"
   ],
-  "metaOptions": [
-    {
-      "key": "testKey",
-      "value": 20
-    }
-  ]
+  "metaOptions": {
+"metaValue":"{\"sideBarEnabled\":true}"
+}
 }
