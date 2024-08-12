@@ -14,7 +14,10 @@ export class PostsService {
   ) {}
 
   public async create(createPostDto: CreatePostDto) {
-    const post = this.postRepository.create(createPostDto);
+    // Get User
+    const author = await this.usersService.findOneById(createPostDto.authorId);
+
+    const post = this.postRepository.create({ ...createPostDto, author });
     return await this.postRepository.save(post);
   }
 
@@ -24,8 +27,6 @@ export class PostsService {
   }
 
   public async findAll(userId: string) {
-    const user = this.usersService.findOneById(userId);
-
     const posts = await this.postRepository.find({
       // relations: { metaOptions: true },
     });
