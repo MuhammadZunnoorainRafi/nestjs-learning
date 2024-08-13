@@ -1,14 +1,17 @@
 import { MetaOptions } from 'src/meta-options/meta-option.entity';
+import { Tags } from 'src/tags/tag.entity';
+import { Users } from 'src/users/user.entity';
 import {
   Column,
   Entity,
+  JoinTable,
+  ManyToMany,
   ManyToOne,
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { postStatus } from './enums/post-status.enum';
 import { postType } from './enums/post-type.enum';
-import { Users } from 'src/users/user.entity';
 
 @Entity()
 export class Posts {
@@ -80,5 +83,7 @@ export class Posts {
   @ManyToOne(() => Users, (users) => users.posts, { eager: true })
   author: Users;
 
-  tags?: string[];
+  @ManyToMany(() => Tags, { eager: true })
+  @JoinTable()
+  tags?: Tags[];
 }

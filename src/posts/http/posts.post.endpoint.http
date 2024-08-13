@@ -5,7 +5,7 @@ Content-Type: application/json
 {
   "title": "What's new with NestJS",
   "postType": "post",
-  "slug": "new-with-nest-js-cascade",
+  "slug": "new-with-nest-many-to-many",
   "status": "draft",
   "content": "post-content",
   "schema": "{\r\n    \"@context\": \"https:\/\/schema.org\",\r\n    \"@type\": \"Person\"\r\n  }",
@@ -18,5 +18,6 @@ Content-Type: application/json
   "metaOptions": {
 "metaValue":"{\"sideBarEnabled\":true, \"footerActive\":true}"
 },
+"tags":["2951c2f1-4a76-4ef4-a9f1-cf58e5427ea5"],
 "authorId":"da9ec316-9a4c-49e9-b326-b4e04a110c50"
 }

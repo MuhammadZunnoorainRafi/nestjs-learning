@@ -20,7 +20,7 @@ export class PostsController {
   constructor(private readonly postsService: PostsService) {}
   @Get()
   getAll(@Param('userId') userId: string) {
-    return this.postsService.findAll(userId);
+    return this.postsService.findAll();
   }
 
   @ApiOperation({ summary: 'Creates a new blog post' })
@@ -40,7 +40,7 @@ export class PostsController {
   })
   @Patch()
   patchPost(@Body() patchPostDto: PatchPostDto) {
-    return patchPostDto;
+    return this.postsService.update(patchPostDto);
   }
 
   @Delete()
