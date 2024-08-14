@@ -1,4 +1,11 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  ParseUUIDPipe,
+  Post,
+  Query,
+} from '@nestjs/common';
 import { TagsService } from './providers/tags.service';
 import { CreateTagsDto } from './dtos/create-tags.dto';
 
@@ -9,5 +16,10 @@ export class TagsController {
   @Post()
   public createTag(@Body() createTagDto: CreateTagsDto) {
     return this.tagsService.create(createTagDto);
+  }
+
+  @Delete()
+  public deleteTag(@Query('id', ParseUUIDPipe) id: string) {
+    return this.tagsService.delete(id);
   }
 }
