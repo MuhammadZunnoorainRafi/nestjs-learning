@@ -1,4 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  RequestTimeoutException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UsersService } from 'src/users/providers/users.service';
 import { Repository } from 'typeorm';
@@ -33,27 +37,46 @@ export class PostsService {
   }
 
   public async update(patchPostDto: PatchPostDto) {
-    // find tags
-    const tags = await this.tagsService.findMultipleTags(patchPostDto.tags);
+    try {
+      // find tags
+      const tags = await this.tagsService.findMultipleTags(patchPostDto.tags);
 
-    // find post
-    const post = await this.postRepository.findOneBy({ id: patchPostDto.id });
+      if (!tags || tags.length !== patchPostDto.tags.length) {
+        return new BadRequestException(
+          'Please check your tag Ids and ensure they are correct',
+        );
+      }
 
-    // update post
-    post.title = patchPostDto.title ?? post.title;
-    post.content = patchPostDto.content ?? post.content;
-    post.status = patchPostDto.status ?? post.status;
-    post.postType = patchPostDto.postType ?? post.postType;
-    post.slug = patchPostDto.slug ?? post.slug;
-    post.featuredImageUrl =
-      patchPostDto.featuredImageUrl ?? post.featuredImageUrl;
-    post.publishOn = patchPostDto.publishOn ?? post.publishOn;
+      // find post
+      const post = await this.postRepository.findOneBy({ id: patchPostDto.id });
 
-    // update tags
-    post.tags = tags;
+      if (!post) {
+        return new BadRequestException('The post Id does not exists');
+      }
 
-    // save updated post to database
-    return await this.postRepository.save(post);
+      // update post
+      post.title = patchPostDto.title ?? post.title;
+      post.content = patchPostDto.content ?? post.content;
+      post.status = patchPostDto.status ?? post.status;
+      post.postType = patchPostDto.postType ?? post.postType;
+      post.slug = patchPostDto.slug ?? post.slug;
+      post.featuredImageUrl =
+        patchPostDto.featuredImageUrl ?? post.featuredImageUrl;
+      post.publishOn = patchPostDto.publishOn ?? post.publishOn;
+
+      // update tags
+      post.tags = tags;
+
+      // save updated post to database
+      return await this.postRepository.save(post);
+    } catch (error) {
+      return new RequestTimeoutException(
+        'Unable to process your request at the moment please try later',
+        {
+          description: 'Error connecting to the the datbase',
+        },
+      ).getResponse();
+    }
   }
 
   public async findAll() {
