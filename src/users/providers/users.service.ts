@@ -5,16 +5,16 @@ import {
   HttpStatus,
   Inject,
   Injectable,
-  NotFoundException,
   RequestTimeoutException,
 } from '@nestjs/common';
-import { GetUserParamsDto } from '../dtos/get-user-params.dto';
+import { ConfigService } from '@nestjs/config';
+import { InjectRepository } from '@nestjs/typeorm';
 import { AuthService } from 'src/auth/providers/auth.service';
 import { DataSource, Repository } from 'typeorm';
-import { Users } from '../user.entity';
-import { InjectRepository } from '@nestjs/typeorm';
 import { CreateUserDto } from '../dtos/create-user.dto';
-import { ConfigService } from '@nestjs/config';
+import { GetUserParamsDto } from '../dtos/get-user-params.dto';
+import { Users } from '../user.entity';
+import { UsersCreateManyProvider } from './users-create-many.provider';
 /**
  * Class to connect to users table and perform business operations
  */
@@ -22,12 +22,11 @@ import { ConfigService } from '@nestjs/config';
 @Injectable()
 export class UsersService {
   constructor(
-    private readonly configService: ConfigService,
     @Inject(forwardRef(() => AuthService))
     private readonly authService: AuthService,
     @InjectRepository(Users)
     private userRepository: Repository<Users>,
-    private readonly dataSource: DataSource,
+    private readonly usersCreateManyProvider: UsersCreateManyProvider,
   ) {}
 
   public async createUser(createUserDto: CreateUserDto) {
@@ -101,21 +100,6 @@ export class UsersService {
   }
 
   public async createMany(createUserDto: CreateUserDto[]) {
-    const newUsers: Users[] = [];
-    const queryRunner = this.dataSource.createQueryRunner();
-    await queryRunner.connect();
-    try {
-      await queryRunner.startTransaction();
-      for (const user of createUserDto) {
-        const newUser = queryRunner.manager.create(Users, user);
-        const result = await queryRunner.manager.save(newUser);
-        newUsers.push(result);
-      }
-      await queryRunner.commitTransaction();
-    } catch (error) {
-      await queryRunner.rollbackTransaction();
-    } finally {
-      await queryRunner.release();
-    }
+    return await this.usersCreateManyProvider.createMany(createUserDto);
   }
 }
