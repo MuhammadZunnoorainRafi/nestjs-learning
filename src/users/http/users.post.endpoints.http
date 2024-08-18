@@ -4,6 +4,24 @@ Content-Type:application/json
 {
     "firstName":"Ahsan",
     "lastName":"Bilal",
-    "email":"ahsanNEW236@gmail.com",
+    "email":"ahsan236@gmail.com",
     "password":"Abcde123#"
+}
+
+
+POST http://localhost:3000/users/create-many
+Content-Type:application/json
+{
+    "users":[{
+    "firstName":"Under",
+    "lastName":"Taker",
+    "email":"undertaker000@gmail.com",
+    "password":"Abcde123#"
+},
+{
+    "firstName":"John",
+    "lastName":"Cena",
+    "email":"johncena2024@gmail.com",
+    "password":"Abcde123#"
+}]
 }

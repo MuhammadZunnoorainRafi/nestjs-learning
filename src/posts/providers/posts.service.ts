@@ -42,7 +42,7 @@ export class PostsService {
       const tags = await this.tagsService.findMultipleTags(patchPostDto.tags);
 
       if (!tags || tags.length !== patchPostDto.tags.length) {
-        return new BadRequestException(
+        throw new BadRequestException(
           'Please check your tag Ids and ensure they are correct',
         );
       }
@@ -51,7 +51,7 @@ export class PostsService {
       const post = await this.postRepository.findOneBy({ id: patchPostDto.id });
 
       if (!post) {
-        return new BadRequestException('The post Id does not exists');
+        throw new BadRequestException('The post Id does not exists');
       }
 
       // update post
@@ -70,12 +70,15 @@ export class PostsService {
       // save updated post to database
       return await this.postRepository.save(post);
     } catch (error) {
-      return new RequestTimeoutException(
+      if (error instanceof BadRequestException) {
+        throw error;
+      }
+      throw new RequestTimeoutException(
         'Unable to process your request at the moment please try later',
         {
           description: 'Error connecting to the the datbase',
         },
-      ).getResponse();
+      );
     }
   }
 
