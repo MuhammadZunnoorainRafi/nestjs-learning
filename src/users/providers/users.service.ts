@@ -10,11 +10,11 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { AuthService } from 'src/auth/providers/auth.service';
 import { Repository } from 'typeorm';
-import { CreateUserDto } from '../dtos/create-user.dto';
-import { GetUserParamsDto } from '../dtos/get-user-params.dto';
+import { CreateUserDto } from '../dtos/create-users.dto';
+import { GetUserParamsDto } from '../dtos/get-users-params.dto';
 import { Users } from '../user.entity';
 import { UsersCreateManyProvider } from './users-create-many.provider';
-import { CreateManyUserDto } from '../dtos/create-many-user.dto';
+import { CreateManyUserDto } from '../dtos/create-many-users.dto';
 /**
  * Class to connect to users table and perform business operations
  */

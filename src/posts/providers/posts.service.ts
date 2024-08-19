@@ -6,10 +6,10 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { UsersService } from 'src/users/providers/users.service';
 import { Repository } from 'typeorm';
-import { CreatePostDto } from '../dtos/create-post.dto';
+import { CreatePostDto } from '../dtos/create-posts.dto';
 import { Posts } from '../post.entity';
 import { TagsService } from 'src/tags/providers/tags.service';
-import { PatchPostDto } from '../dtos/patch-post.dto';
+import { PatchPostDto } from '../dtos/patch-posts.dto';
 
 @Injectable()
 export class PostsService {

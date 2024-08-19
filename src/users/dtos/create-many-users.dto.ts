@@ -1,5 +1,5 @@
 import { IsArray, IsNotEmpty, ValidateNested } from 'class-validator';
-import { CreateUserDto } from './create-user.dto';
+import { CreateUserDto } from './create-users.dto';
 import { Type } from 'class-transformer';
 
 export class CreateManyUserDto {
