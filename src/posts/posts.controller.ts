@@ -21,8 +21,7 @@ export class PostsController {
   constructor(private readonly postsService: PostsService) {}
   @Get()
   getAll(@Param('userId') userId: string, @Query() postQuery: GetPostsDto) {
-    console.log(postQuery);
-    return this.postsService.findAll();
+    return this.postsService.findAll(postQuery);
   }
 
   @ApiOperation({ summary: 'Creates a new blog post' })

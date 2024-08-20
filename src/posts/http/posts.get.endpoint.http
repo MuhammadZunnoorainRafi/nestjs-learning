@@ -9,4 +9,4 @@ exports.endDate = date.toString()
 GET http://localhost:3000/posts
 ?startDate={{startDate}}
 &endDate={{endDate}}
-&page=1
+&page=3
