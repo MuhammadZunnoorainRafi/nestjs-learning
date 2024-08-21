@@ -1,4 +1,4 @@
-export type Paginated<T> = {
+export type PaginatedType<T> = {
   data: T[];
   meta: {
     itemsPerPage: number;

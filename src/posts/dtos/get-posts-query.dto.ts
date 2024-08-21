@@ -12,7 +12,7 @@ class GetPostsBaseDto {
   endDate?: Date;
 }
 
-export class GetPostsDto extends IntersectionType(
+export class GetPostsQueryDto extends IntersectionType(
   GetPostsBaseDto,
   PaginationQueryDto,
 ) {}

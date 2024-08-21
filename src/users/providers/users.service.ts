@@ -9,12 +9,13 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { AuthService } from 'src/auth/providers/auth.service';
-import { Repository } from 'typeorm';
+import { QueryFailedError, Repository } from 'typeorm';
 import { CreateUserDto } from '../dtos/create-users.dto';
 import { GetUserParamsDto } from '../dtos/get-users-params.dto';
 import { Users } from '../user.entity';
 import { UsersCreateManyProvider } from './users-create-many.provider';
 import { CreateManyUserDto } from '../dtos/create-many-users.dto';
+import { PaginationService } from 'src/common/pagination/providers/pagination.service';
 /**
  * Class to connect to users table and perform business operations
  */
@@ -27,6 +28,7 @@ export class UsersService {
     @InjectRepository(Users)
     private userRepository: Repository<Users>,
     private readonly usersCreateManyProvider: UsersCreateManyProvider,
+    private readonly paginationService: PaginationService,
   ) {}
 
   public async createUser(createUserDto: CreateUserDto) {
@@ -59,24 +61,32 @@ export class UsersService {
   /**
    * The method to get all the users from the database
    */
-  public findAll(
+  public async findAll(
     getUserParamsDto: GetUserParamsDto,
-    page: number,
     limit: number,
+    page: number,
   ) {
-    throw new HttpException(
-      {
-        status: HttpStatus.MOVED_PERMANENTLY,
-        error: 'The API endpoint does not exist',
-        fileName: 'users.service.ts',
-        lineNumber: 88,
-      },
-      HttpStatus.MOVED_PERMANENTLY,
-      {
-        cause: new Error(),
-        description: 'Occured because the API endpoint was permanently moved',
-      },
-    );
+    try {
+      const response = await this.paginationService.paginateQuery(
+        { page, limit: 2 },
+        this.userRepository,
+      );
+      return response;
+    } catch (error) {
+      throw new HttpException(
+        {
+          status: HttpStatus.MOVED_PERMANENTLY,
+          error: 'The API endpoint does not exist',
+          fileName: 'users.service.ts',
+          lineNumber: 88,
+        },
+        HttpStatus.MOVED_PERMANENTLY,
+        {
+          cause: new Error(),
+          description: 'Occured because the API endpoint was permanently moved',
+        },
+      );
+    }
   }
 
   /**
