@@ -6,10 +6,11 @@ import { UsersCreateManyProvider } from './providers/users-create-many.provider'
 import { UsersService } from './providers/users.service';
 import { Users } from './user.entity';
 import { UsersController } from './users.controller';
+import { CreatUserProvider } from './providers/create-user.provider';
 
 @Module({
   controllers: [UsersController],
-  providers: [UsersService, UsersCreateManyProvider],
+  providers: [UsersService, UsersCreateManyProvider, CreatUserProvider],
   exports: [UsersService],
   imports: [
     PaginationModule,

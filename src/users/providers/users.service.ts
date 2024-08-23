@@ -1,21 +1,20 @@
 import {
-  BadRequestException,
   forwardRef,
   HttpException,
   HttpStatus,
   Inject,
   Injectable,
-  RequestTimeoutException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { AuthService } from 'src/auth/providers/auth.service';
-import { QueryFailedError, Repository } from 'typeorm';
+import { PaginationService } from 'src/common/pagination/providers/pagination.service';
+import { Repository } from 'typeorm';
+import { CreateManyUserDto } from '../dtos/create-many-users.dto';
 import { CreateUserDto } from '../dtos/create-users.dto';
 import { GetUserParamsDto } from '../dtos/get-users-params.dto';
 import { Users } from '../user.entity';
 import { UsersCreateManyProvider } from './users-create-many.provider';
-import { CreateManyUserDto } from '../dtos/create-many-users.dto';
-import { PaginationService } from 'src/common/pagination/providers/pagination.service';
+import { CreatUserProvider } from './create-user.provider';
 /**
  * Class to connect to users table and perform business operations
  */
@@ -29,33 +28,11 @@ export class UsersService {
     private userRepository: Repository<Users>,
     private readonly usersCreateManyProvider: UsersCreateManyProvider,
     private readonly paginationService: PaginationService,
+    private readonly createUserProvider: CreatUserProvider,
   ) {}
 
   public async createUser(createUserDto: CreateUserDto) {
-    try {
-      const userExists = await this.userRepository.findOne({
-        where: { email: createUserDto.email },
-      });
-
-      if (userExists) {
-        throw new BadRequestException(
-          'The user already exists, please check your email.',
-        );
-      }
-
-      const newUser = this.userRepository.create(createUserDto);
-      return await this.userRepository.save(newUser);
-    } catch (error) {
-      if (error instanceof BadRequestException) {
-        throw error;
-      }
-      throw new RequestTimeoutException(
-        'Unable to process your request at the moment please try later',
-        {
-          description: 'Error connecting to the the datbase',
-        },
-      );
-    }
+    return this.createUserProvider.create(createUserDto);
   }
 
   /**
