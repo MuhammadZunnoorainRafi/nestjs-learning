@@ -15,6 +15,7 @@ import { GetUserParamsDto } from '../dtos/get-users-params.dto';
 import { Users } from '../user.entity';
 import { UsersCreateManyProvider } from './users-create-many.provider';
 import { CreatUserProvider } from './create-user.provider';
+import { FindOneUserProvider } from './find-one-user.provider';
 /**
  * Class to connect to users table and perform business operations
  */
@@ -29,10 +30,11 @@ export class UsersService {
     private readonly usersCreateManyProvider: UsersCreateManyProvider,
     private readonly paginationService: PaginationService,
     private readonly createUserProvider: CreatUserProvider,
+    private readonly findOneUserProvider: FindOneUserProvider,
   ) {}
 
   public async createUser(createUserDto: CreateUserDto) {
-    return this.createUserProvider.create(createUserDto);
+    return this.createUserProvider.createUser(createUserDto);
   }
 
   /**
@@ -84,6 +86,10 @@ export class UsersService {
     //     },
     //   ).getResponse();
     // }
+  }
+
+  public async findOneUserByEmail(email: string) {
+    return await this.findOneUserProvider.byEmail(email);
   }
 
   public async createMany(createManyUserDto: CreateManyUserDto) {

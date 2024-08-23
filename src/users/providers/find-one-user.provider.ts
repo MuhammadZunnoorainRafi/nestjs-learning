@@ -10,7 +10,7 @@ import { Repository } from 'typeorm';
 @Injectable()
 export class FindOneUserProvider {
   constructor(
-    @InjectRepository(() => Users)
+    @InjectRepository(Users)
     private readonly usersRepository: Repository<Users>,
   ) {}
   public async byEmail(email: string) {

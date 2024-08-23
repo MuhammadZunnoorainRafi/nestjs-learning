@@ -19,7 +19,7 @@ export class CreatUserProvider {
     @Inject(forwardRef(() => HashingProvider))
     private readonly hashingProvider: HashingProvider,
   ) {}
-  public async create(creatUserDto: CreateUserDto) {
+  public async createUser(creatUserDto: CreateUserDto) {
     try {
       const existingUser = await this.usersRepository.findOneBy({
         email: creatUserDto.email,

@@ -7,10 +7,16 @@ import { UsersService } from './providers/users.service';
 import { Users } from './user.entity';
 import { UsersController } from './users.controller';
 import { CreatUserProvider } from './providers/create-user.provider';
+import { FindOneUserProvider } from './providers/find-one-user.provider';
 
 @Module({
   controllers: [UsersController],
-  providers: [UsersService, UsersCreateManyProvider, CreatUserProvider],
+  providers: [
+    UsersService,
+    UsersCreateManyProvider,
+    CreatUserProvider,
+    FindOneUserProvider,
+  ],
   exports: [UsersService],
   imports: [
     PaginationModule,
