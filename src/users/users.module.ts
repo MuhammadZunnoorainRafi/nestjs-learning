@@ -8,6 +8,9 @@ import { Users } from './user.entity';
 import { UsersController } from './users.controller';
 import { CreatUserProvider } from './providers/create-user.provider';
 import { FindOneUserProvider } from './providers/find-one-user.provider';
+import { ConfigModule } from '@nestjs/config';
+import jwtConfig from 'src/auth/config/jwt.config';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
   controllers: [UsersController],
@@ -22,6 +25,8 @@ import { FindOneUserProvider } from './providers/find-one-user.provider';
     PaginationModule,
     forwardRef(() => AuthModule),
     TypeOrmModule.forFeature([Users]),
+    ConfigModule.forFeature(jwtConfig),
+    JwtModule.registerAsync(jwtConfig.asProvider()),
   ],
 })
 export class UsersModule {}
