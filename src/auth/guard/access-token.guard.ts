@@ -3,13 +3,11 @@ import {
   ExecutionContext,
   Inject,
   Injectable,
-  RequestTimeoutException,
   UnauthorizedException,
 } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { Request } from 'express';
-import { Observable } from 'rxjs';
 import jwtConfig from '../config/jwt.config';
 import { REQUES_USER_KEY } from '../constants/auth.constants';
 
