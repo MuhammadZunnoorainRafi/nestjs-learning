@@ -8,18 +8,15 @@ import {
   Patch,
   Post,
   Query,
-  SetMetadata,
-  UseGuards,
 } from '@nestjs/common';
+import { ApiOperation, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { Auth } from 'src/auth/decorators/auth.decorator';
+import { AuthType } from 'src/auth/enums/auth-type.enum';
+import { CreateManyUserDto } from './dtos/create-many-users.dto';
 import { CreateUserDto } from './dtos/create-users.dto';
 import { GetUserParamsDto } from './dtos/get-users-params.dto';
 import { PatchUserDto } from './dtos/patch-users.dto';
 import { UsersService } from './providers/users.service';
-import { ApiOperation, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { CreateManyUserDto } from './dtos/create-many-users.dto';
-import { AccessTokenGuard } from 'src/auth/guard/access-token.guard';
-import { Auth } from 'src/auth/decorators/auth.decorator';
-import { AuthType } from 'src/auth/enums/auth-type.enum';
 
 // http://localhost:3000/users
 @Controller('users')
@@ -64,7 +61,7 @@ export class UsersController {
     return this.usersService.createUser(createUserDto);
   }
 
-  @UseGuards(AccessTokenGuard)
+  // @UseGuards(AccessTokenGuard)
   @Post('create-many')
   public createManyUsers(@Body() createMantUserDto: CreateManyUserDto) {
     return this.usersService.createMany(createMantUserDto);
