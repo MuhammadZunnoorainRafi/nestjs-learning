@@ -4,9 +4,9 @@ Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0ZDlkMDcxZi1mNTdlLTQxODktOWU1NS03MzE4MmRmODE1YzYiLCJlbWFpbCI6ImlydGF6YW1hdGljQGdtYWlsLmNvbSIsImlhdCI6MTcyNDY3MDkxOCwiZXhwIjoxNzI0Njc0NTE4LCJhdWQiOiJsb2NhbGhvc3Q6MzAwMCIsImlzcyI6ImxvY2FsaG9zdDozMDAwIn0.A3zjA-UOc_4TIFHUwdIQagpKiTtoSFUybHr4mnYDcEM
 
 {
-  "title": "Night Rider",
+  "title": "Night Rider TWO",
   "postType": "post",
-  "slug": "night-rider",
+  "slug": "night-rider-two",
   "status": "draft",
   "content": "post-content",
   "schema": "{\r\n    \"@context\": \"https:\/\/schema.org\",\r\n    \"@type\": \"Person\"\r\n  }",
@@ -15,6 +15,5 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0ZDlkMDcxZ
   "metaOptions": {
 "metaValue":"{\"sideBarEnabled\":true, \"footerActive\":true}"
 },
-"tags":["2951c2f1-4a76-4ef4-a9f1-cf58e5427ea5"],
-"authorId":"da9ec316-9a4c-49e9-b326-b4e04a110c50"
+"tags":["2951c2f1-4a76-4ef4-a9f1-cf58e5427ea5"]
 }

@@ -37,10 +37,9 @@ export class PostsController {
   @Post()
   createPost(
     @Body() createPostDto: CreatePostDto,
-    @ActiveUser('email') user: ActiveUserType,
+    @ActiveUser() user: ActiveUserType,
   ) {
-    console.log(user);
-    // return this.postsService.create(createPostDto);
+    return this.postsService.createPost(createPostDto, user);
   }
 
   @ApiOperation({ summary: 'Updates an existing blog post' })

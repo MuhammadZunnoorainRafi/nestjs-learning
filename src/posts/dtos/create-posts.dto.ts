@@ -8,17 +8,16 @@ import {
   IsOptional,
   IsString,
   IsUrl,
-  IsUUID,
   Matches,
   MaxLength,
   MinLength,
   ValidateNested,
 } from 'class-validator';
 
-import { CreatePostMetaOptionsDto } from '../../meta-options/dtos/create-post-meta-options.dto';
 import { Type } from 'class-transformer';
-import { postType } from '../enums/post-type.enum';
+import { CreatePostMetaOptionsDto } from '../../meta-options/dtos/create-post-meta-options.dto';
 import { postStatus } from '../enums/post-status.enum';
+import { postType } from '../enums/post-type.enum';
 
 export class CreatePostDto {
   @ApiProperty({
@@ -130,8 +129,4 @@ export class CreatePostDto {
   @ValidateNested({ each: true })
   @Type(() => CreatePostMetaOptionsDto)
   metaOptions?: CreatePostMetaOptionsDto | null;
-
-  @IsNotEmpty()
-  @IsUUID()
-  authorId: string;
 }
