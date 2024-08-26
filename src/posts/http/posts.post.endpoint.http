@@ -1,6 +1,7 @@
 # {\r\n    \"@context\": \"https:\/\/schema.org\",\r\n    \"@type\": \"Person\"\r\n  }
 POST http://localhost:3000/posts
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0ZDlkMDcxZi1mNTdlLTQxODktOWU1NS03MzE4MmRmODE1YzYiLCJlbWFpbCI6ImlydGF6YW1hdGljQGdtYWlsLmNvbSIsImlhdCI6MTcyNDY3MDkxOCwiZXhwIjoxNzI0Njc0NTE4LCJhdWQiOiJsb2NhbGhvc3Q6MzAwMCIsImlzcyI6ImxvY2FsaG9zdDozMDAwIn0.A3zjA-UOc_4TIFHUwdIQagpKiTtoSFUybHr4mnYDcEM
 
 {
   "title": "Night Rider",

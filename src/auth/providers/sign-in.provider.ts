@@ -12,6 +12,7 @@ import { SignInUsersDto } from '../dtos/sign-in-users.dto';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigType } from '@nestjs/config';
 import jwtConfig from '../config/jwt.config';
+import { ActiveUserType } from '../types/ActiveUserType';
 
 @Injectable()
 export class SignInProvider {
@@ -42,7 +43,7 @@ export class SignInProvider {
         throw new UnauthorizedException('Password not matched');
       }
       const accessToken = await this.jwtService.signAsync(
-        { sub: userExists.id, email: userExists.email },
+        { sub: userExists.id, email: userExists.email } as ActiveUserType,
         {
           audience: this.jwtConfiguration.audience,
           issuer: this.jwtConfiguration.issuer,
