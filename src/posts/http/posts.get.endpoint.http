@@ -6,8 +6,9 @@ exports.endDate = date.toString()
 
 
 
-GET http://localhost:3000/posts
-?page=-1
+GET http://localhost:3000/posts?page=1
+Authorization:Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0ZDlkMDcxZi1mNTdlLTQxODktOWU1NS03MzE4MmRmODE1YzYiLCJlbWFpbCI6ImlydGF6YW1hdGljQGdtYWlsLmNvbSIsImlhdCI6MTcyNDc1NTgyMCwiZXhwIjoxNzI0NzU5NDIwLCJhdWQiOiJsb2NhbGhvc3Q6MzAwMCIsImlzcyI6ImxvY2FsaG9zdDozMDAwIn0.bxLIanxIQcAmX0cRYiEvax2mII5uwRO5ah5pNYdxwfU
+
 
 # ?startDate={{startDate}}
 # &endDate={{endDate}}

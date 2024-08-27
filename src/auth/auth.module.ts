@@ -9,6 +9,7 @@ import { BcryptProvider } from './providers/bcrypt.provider';
 import { HashingProvider } from './providers/hashing.provider';
 import { SignInProvider } from './providers/sign-in.provider';
 import { GenerateTokenProvider } from './providers/generate-token.provider';
+import { RefreshTokensProvider } from './providers/refresh-tokens.provider';
 
 @Module({
   controllers: [AuthController],
@@ -20,6 +21,7 @@ import { GenerateTokenProvider } from './providers/generate-token.provider';
     },
     SignInProvider,
     GenerateTokenProvider,
+    RefreshTokensProvider,
   ],
   imports: [
     forwardRef(() => UsersModule),
