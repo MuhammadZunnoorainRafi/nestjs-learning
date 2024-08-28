@@ -6,7 +6,7 @@ import { Users } from 'src/users/user.entity';
 import { ActiveUserType } from '../types/ActiveUserType';
 
 @Injectable()
-export class GenerateTokenProvider {
+export class GenerateTokensProvider {
   constructor(
     @Inject(jwtConfig.KEY)
     private readonly jwtConfiguration: ConfigType<typeof jwtConfig>,

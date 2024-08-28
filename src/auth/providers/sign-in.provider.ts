@@ -8,7 +8,7 @@ import {
 } from '@nestjs/common';
 import { UsersService } from 'src/users/providers/users.service';
 import { SignInUsersDto } from '../dtos/sign-in-users.dto';
-import { GenerateTokenProvider } from './generate-token.provider';
+import { GenerateTokensProvider } from './generate-tokens.provider';
 import { HashingProvider } from './hashing.provider';
 
 @Injectable()
@@ -17,7 +17,7 @@ export class SignInProvider {
     @Inject(forwardRef(() => UsersService))
     private readonly userService: UsersService,
     private readonly hashingProvider: HashingProvider,
-    private readonly generateTokenProvider: GenerateTokenProvider,
+    private readonly generateTokensProvider: GenerateTokensProvider,
   ) {}
   public async signIn(signInUsersDto: SignInUsersDto) {
     try {
@@ -38,7 +38,7 @@ export class SignInProvider {
         throw new UnauthorizedException('Incorrect Password');
       }
 
-      return await this.generateTokenProvider.generateTokens(userExists);
+      return await this.generateTokensProvider.generateTokens(userExists);
     } catch (error) {
       console.log(error);
       if (

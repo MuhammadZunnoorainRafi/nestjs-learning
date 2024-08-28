@@ -8,7 +8,7 @@ import { JwtService } from '@nestjs/jwt';
 import jwtConfig from '../config/jwt.config';
 import { ConfigType } from '@nestjs/config';
 import { UsersService } from 'src/users/providers/users.service';
-import { GenerateTokenProvider } from './generate-token.provider';
+import { GenerateTokensProvider } from './generate-tokens.provider';
 import { RefreshTokenDto } from '../dtos/refresh-token.dto';
 import { ActiveUserType } from '../types/ActiveUserType';
 
@@ -16,7 +16,7 @@ import { ActiveUserType } from '../types/ActiveUserType';
 export class RefreshTokensProvider {
   constructor(
     private readonly jwtService: JwtService,
-    private readonly generateTokenProvider: GenerateTokenProvider,
+    private readonly generateTokensProvider: GenerateTokensProvider,
     @Inject(jwtConfig.KEY)
     private readonly jwtConfiguration: ConfigType<typeof jwtConfig>,
     @Inject(forwardRef(() => UsersService))
@@ -38,7 +38,7 @@ export class RefreshTokensProvider {
       const user = await this.usersService.findOneById(sub);
 
       // Generate the tokens
-      return await this.generateTokenProvider.generateTokens(user);
+      return await this.generateTokensProvider.generateTokens(user);
     } catch (error) {
       console.log(error);
       throw new UnauthorizedException('Unauthorized');

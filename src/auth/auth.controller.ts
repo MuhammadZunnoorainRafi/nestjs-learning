@@ -10,15 +10,14 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('sign-in')
-  @Auth(AuthType.None)
   @HttpCode(HttpStatus.OK)
+  @Auth(AuthType.None)
   public async signInUser(@Body() signInUsersDto: SignInUsersDto) {
     return this.authService.signIn(signInUsersDto);
   }
 
-  @Post('refresh-tokens')
-  @Auth(AuthType.None)
   @HttpCode(HttpStatus.OK)
+  @Post('refresh-tokens')
   public async refreshTokens(@Body() refreshTokenDto: RefreshTokenDto) {
     return await this.authService.refreshTokens(refreshTokenDto);
   }
