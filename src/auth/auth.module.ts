@@ -10,9 +10,11 @@ import { HashingProvider } from './providers/hashing.provider';
 import { SignInProvider } from './providers/sign-in.provider';
 import { GenerateTokenProvider } from './providers/generate-token.provider';
 import { RefreshTokensProvider } from './providers/refresh-tokens.provider';
+import { GoogleAuthController } from './social/google-auth.controller';
+import { GoogleAuthService } from './social/providers/google-auth.service';
 
 @Module({
-  controllers: [AuthController],
+  controllers: [AuthController, GoogleAuthController],
   providers: [
     AuthService,
     {
@@ -22,6 +24,7 @@ import { RefreshTokensProvider } from './providers/refresh-tokens.provider';
     SignInProvider,
     GenerateTokenProvider,
     RefreshTokensProvider,
+    GoogleAuthService,
   ],
   imports: [
     forwardRef(() => UsersModule),

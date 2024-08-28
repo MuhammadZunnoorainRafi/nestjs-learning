@@ -16,6 +16,7 @@ import { Users } from '../user.entity';
 import { UsersCreateManyProvider } from './users-create-many.provider';
 import { CreatUserProvider } from './create-user.provider';
 import { FindOneUserProvider } from './find-one-user.provider';
+import { FindOneByGoogleId } from './find-one-by-google-id.provider';
 /**
  * Class to connect to users table and perform business operations
  */
@@ -31,6 +32,7 @@ export class UsersService {
     private readonly paginationService: PaginationService,
     private readonly createUserProvider: CreatUserProvider,
     private readonly findOneUserProvider: FindOneUserProvider,
+    private readonly findOneByGoogleIdProvider: FindOneByGoogleId,
   ) {}
 
   public async createUser(createUserDto: CreateUserDto) {
@@ -94,5 +96,9 @@ export class UsersService {
 
   public async createMany(createManyUserDto: CreateManyUserDto) {
     return await this.usersCreateManyProvider.createMany(createManyUserDto);
+  }
+
+  public async findOneByGoogleId(googleId: string) {
+    return await this.findOneByGoogleIdProvider.findOneByGoogleId(googleId);
   }
 }
