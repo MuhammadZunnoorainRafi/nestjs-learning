@@ -31,28 +31,28 @@ export class GoogleAuthService implements OnModuleInit {
 
   public async authentication(googleTokenDto: GoogleTokenDto) {
     try {
+      // verify the Google Token sent by User
+      const loginTicket = await this.oauthClient.verifyIdToken({
+        idToken: googleTokenDto.token,
+      });
+      console.log(loginTicket);
+      // Extract the payload from Google JWT
+      const { email, sub: googleId } = loginTicket.getPayload();
+
+      // Find the user in the database using the GoogleId
+      const user = await this.usersService.findOneByGoogleId(googleId);
+
+      // If googleId exists generate tokens
+      if (user) {
+        return await this.generateTokenProvider.generateTokens(user);
+      } else {
+        // If not, create a new user and then generate tokens
+        // const newUser = this.usersService.
+      }
     } catch (error) {
       console.log(error);
+      // throw Unauthorized exception
       throw new UnauthorizedException('Unauthorized');
     }
-    // verify the Google Token sent by User
-    const loginTicket = await this.oauthClient.verifyIdToken({
-      idToken: googleTokenDto.token,
-    });
-
-    // Extract the payload from Google JWT
-    const { email, sub: googleId } = loginTicket.getPayload();
-
-    // Find the user in the database using the GoogleId
-    const user = await this.usersService.findOneByGoogleId(googleId);
-
-    // If googleId exists generate tokens
-    if (user) {
-      return await this.generateTokenProvider.generateTokens(user);
-    } else {
-      // If not, create a new user and then generate tokens
-      // const newUser = this.usersService.
-    }
-    // throw Unauthorized exception
   }
 }
