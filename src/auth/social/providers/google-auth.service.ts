@@ -1,16 +1,16 @@
 import {
+  BadRequestException,
   forwardRef,
   Inject,
   Injectable,
   OnModuleInit,
-  UnauthorizedException,
 } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
-import jwtConfig from 'src/auth/config/jwt.config';
-import { GoogleTokenDto } from '../dtos/google-token.dto';
-import { UsersService } from 'src/users/providers/users.service';
-import { GenerateTokensProvider } from 'src/auth/providers/generate-tokens.provider';
 import { OAuth2Client } from 'google-auth-library';
+import jwtConfig from 'src/auth/config/jwt.config';
+import { GenerateTokensProvider } from 'src/auth/providers/generate-tokens.provider';
+import { UsersService } from 'src/users/providers/users.service';
+import { GoogleTokenDto } from '../dtos/google-token.dto';
 
 @Injectable()
 export class GoogleAuthService implements OnModuleInit {
@@ -36,22 +36,31 @@ export class GoogleAuthService implements OnModuleInit {
       const loginTicket = await this.oauthClient.verifyIdToken({
         idToken: googleTokenDto.token,
       });
-      console.log(loginTicket);
       // Extract the payload from Google JWT
-      // const { email, sub: googleId } = loginTicket.getPayload();
-      // // Find the user in the database using the GoogleId
-      // const user = await this.usersService.findOneByGoogleId(googleId);
-      // // If googleId exists generate tokens
-      // if (user) {
-      //   return await this.generateTokenProvider.generateTokens(user);
-      // } else {
-      //   // If not, create a new user and then generate tokens
-      //   // const newUser = this.usersService.
-      // }
+      const {
+        email,
+        sub: googleId,
+        name: firstName,
+        family_name: lastName,
+      } = loginTicket.getPayload();
+      // Find the user in the database using the GoogleId
+      const user = await this.usersService.findOneByGoogleId(googleId);
+      // If googleId exists generate tokens
+      if (user) {
+        return await this.generateTokensProvider.generateTokens(user);
+      } else {
+        // If not, create a new user and then generate tokens
+        const newUser = await this.usersService.createGoogleUser({
+          email,
+          firstName,
+          lastName,
+          googleId,
+        });
+        return await this.generateTokensProvider.generateTokens(newUser);
+      }
     } catch (error) {
       console.log(error);
-      // throw Unauthorized exception
-      throw new UnauthorizedException('Internal Server Error');
+      throw new BadRequestException('Internal Server Error');
     }
   }
 }

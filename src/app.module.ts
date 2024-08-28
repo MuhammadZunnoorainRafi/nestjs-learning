@@ -19,6 +19,7 @@ import { AccessTokenGuard } from './auth/guard/access-token.guard';
 import { AuthenticationGuard } from './auth/guard/authentication.guard';
 
 const ENV = process.env.NODE_ENV;
+console.log(process.env.DATABASE_NAME);
 
 @Module({
   imports: [
@@ -40,8 +41,8 @@ const ENV = process.env.NODE_ENV;
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({
         type: 'postgres',
+        synchronize: configService.get('database.synchronize'),
         autoLoadEntities: configService.get('database.autoLoadEntities'),
-        synchronize: configService.get('database.sync'),
         database: configService.get('database.name'),
         host: configService.get('database.host'),
         port: configService.get('database.port'),
