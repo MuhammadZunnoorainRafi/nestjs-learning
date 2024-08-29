@@ -14,9 +14,10 @@ import environmentValidation from './config/environment.validation';
 import { PaginationModule } from './common/pagination/pagination.module';
 import jwtConfig from './auth/config/jwt.config';
 import { JwtModule } from '@nestjs/jwt';
-import { APP_GUARD } from '@nestjs/core';
+import { APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
 import { AccessTokenGuard } from './auth/guard/access-token.guard';
 import { AuthenticationGuard } from './auth/guard/authentication.guard';
+import { DataResponseInterceptor } from './common/interceptors/data-reponse.interceptor';
 
 const ENV = process.env.NODE_ENV;
 console.log(process.env.DATABASE_NAME);
@@ -59,6 +60,10 @@ console.log(process.env.DATABASE_NAME);
     {
       provide: APP_GUARD,
       useClass: AuthenticationGuard,
+    },
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: DataResponseInterceptor,
     },
     AccessTokenGuard,
   ],
