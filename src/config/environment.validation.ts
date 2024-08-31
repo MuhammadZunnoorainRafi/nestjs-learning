@@ -16,4 +16,8 @@ export default joi.object({
   JWT_TOKEN_ISSUER: joi.string().required(),
   JWT_ACCESS_TOKEN_TTL: joi.number().required(),
   JWT_REFRESH_TOKEN_TTL: joi.number().required(),
+  AWS_REGION: joi.string().required(),
+  AWS_PUBLIC_BUCKET_NAME: joi.string().required(),
+  S3_SECRET_ACCESS_KEY: joi.string().required(),
+  S3_ACCESS_KEY: joi.string().required(),
 });

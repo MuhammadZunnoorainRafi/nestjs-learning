@@ -1,8 +1,9 @@
-import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
+import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import { DataResponseInterceptor } from './common/interceptors/data-reponse.interceptor';
+import { config } from 'aws-sdk';
+import { AppModule } from './app.module';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.useGlobalPipes(
@@ -15,7 +16,7 @@ async function bootstrap() {
   );
 
   // Swagger Configuration
-  const config = new DocumentBuilder()
+  const swaggerConfig = new DocumentBuilder()
     .setTitle('Nestjs - Blog App API')
     .setDescription('Use the base API URL as http://localhost:3000')
     .setTermsOfService('http://localhost:3000/terms-of-service')
@@ -26,8 +27,17 @@ async function bootstrap() {
     .addServer('http://localhost:3000')
     .setVersion('1.0')
     .build();
-  const document = SwaggerModule.createDocument(app, config);
+  const document = SwaggerModule.createDocument(app, swaggerConfig);
   SwaggerModule.setup('api', app, document);
+
+  const configService = app.get(ConfigService);
+  config.update({
+    credentials: {
+      accessKeyId: configService.get('appConfig.awsAccessKey'),
+      secretAccessKey: configService.get('appConfig.awsSecretAccessKey'),
+    },
+    region: configService.get('appConfig.awsRegion'),
+  });
 
   app.enableCors();
   await app.listen(3000);
