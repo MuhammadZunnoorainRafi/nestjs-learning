@@ -18,6 +18,7 @@ import { APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
 import { AccessTokenGuard } from './auth/guard/access-token.guard';
 import { AuthenticationGuard } from './auth/guard/authentication.guard';
 import { DataResponseInterceptor } from './common/interceptors/data-reponse.interceptor';
+import { UploadsModule } from './uploads/uploads.module';
 
 const ENV = process.env.NODE_ENV;
 console.log(process.env.DATABASE_NAME);
@@ -30,6 +31,7 @@ console.log(process.env.DATABASE_NAME);
     TagsModule,
     MetaOptionsModule,
     PaginationModule,
+    UploadsModule,
     ConfigModule.forRoot({
       isGlobal: true,
       // envFilePath: ['.env.development'],
