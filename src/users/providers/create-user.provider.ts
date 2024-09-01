@@ -10,6 +10,7 @@ import { Repository } from 'typeorm';
 import { CreateUserDto } from '../dtos/create-users.dto';
 import { Users } from '../user.entity';
 import { HashingProvider } from 'src/auth/providers/hashing.provider';
+import { MailService } from 'src/mail/providers/mail.service';
 
 @Injectable()
 export class CreatUserProvider {
@@ -18,6 +19,7 @@ export class CreatUserProvider {
     private readonly usersRepository: Repository<Users>,
     @Inject(forwardRef(() => HashingProvider))
     private readonly hashingProvider: HashingProvider,
+    private readonly mailService: MailService,
   ) {}
   public async createUser(creatUserDto: CreateUserDto) {
     try {
@@ -30,11 +32,13 @@ export class CreatUserProvider {
       const hashedPassword = await this.hashingProvider.hashPassword(
         creatUserDto.password,
       );
-      const newUser = this.usersRepository.create({
+      let newUser = this.usersRepository.create({
         ...creatUserDto,
         password: hashedPassword,
       });
-      return await this.usersRepository.save(newUser);
+      newUser = await this.usersRepository.save(newUser);
+      await this.mailService.sendUserWelcomeEmail(newUser);
+      return newUser;
     } catch (error) {
       console.log(error);
       if (error instanceof BadRequestException) {
