@@ -1,0 +1,13 @@
+POST http://localhost:3000/uploads/file
+Content-Type: multipart/form-data; boundary=WebKitFormBoundary
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0ZDlkMDcxZi1mNTdlLTQxODktOWU1NS03MzE4MmRmODE1YzYiLCJlbWFpbCI6ImlydGF6YW1hdGljQGdtYWlsLmNvbSIsImlhdCI6MTcyNTE2NzQ0MCwiZXhwIjoxNzI1MTcxMDQwLCJhdWQiOiJsb2NhbGhvc3Q6MzAwMCIsImlzcyI6ImxvY2FsaG9zdDozMDAwIn0.qzcXFaxr5kbPhLKppIBAo23jWnY32SUf-8gyhEiopsA
+
+file
+--WebKitFormBoundary
+Content-Disposition: form-data; name="file"; filename="nestjs-img.png"
+Content-Type: image/jpg
+
+< ./nestjs-img.png
+--WebKitFormBoundary--
+
+

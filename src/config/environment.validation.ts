@@ -20,4 +20,5 @@ export default joi.object({
   AWS_PUBLIC_BUCKET_NAME: joi.string().required(),
   S3_SECRET_ACCESS_KEY: joi.string().required(),
   S3_ACCESS_KEY: joi.string().required(),
+  IMAGE_BASE_URL: joi.string().required(),
 });

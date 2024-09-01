@@ -21,7 +21,6 @@ import { DataResponseInterceptor } from './common/interceptors/data-reponse.inte
 import { UploadsModule } from './uploads/uploads.module';
 
 const ENV = process.env.NODE_ENV;
-console.log(process.env.DATABASE_NAME);
 
 @Module({
   imports: [
@@ -44,13 +43,13 @@ console.log(process.env.DATABASE_NAME);
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({
         type: 'postgres',
-        synchronize: configService.get('database.synchronize'),
-        autoLoadEntities: configService.get('database.autoLoadEntities'),
-        database: configService.get('database.name'),
-        host: configService.get('database.host'),
-        port: configService.get('database.port'),
-        username: configService.get('database.user'),
-        password: configService.get('database.password'),
+        synchronize: configService.get('databaseConfig.synchronize'),
+        autoLoadEntities: configService.get('databaseConfig.autoLoadEntities'),
+        database: configService.get('databaseConfig.name'),
+        host: configService.get('databaseConfig.host'),
+        port: configService.get('databaseConfig.port'),
+        username: configService.get('databaseConfig.user'),
+        password: configService.get('databaseConfig.password'),
       }),
     }),
     ConfigModule.forFeature(jwtConfig),

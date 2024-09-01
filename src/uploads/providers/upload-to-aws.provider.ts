@@ -1,7 +1,7 @@
 import { Injectable, RequestTimeoutException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { S3 } from 'aws-sdk';
-import path from 'path';
+import * as path from 'path';
 import { v4 as uuidV4 } from 'uuid';
 
 @Injectable()
@@ -12,7 +12,7 @@ export class UploadToAwsProvider {
       const s3 = new S3();
       const uploadResult = await s3
         .upload({
-          Bucket: this.configService.get('appConfig.awsBucketName'),
+          Bucket: this.configService.get<string>('appConfig.awsBucketName'),
           Key: this.generateFileName(file),
           Body: file.buffer,
           ContentType: file.mimetype,
@@ -33,8 +33,8 @@ export class UploadToAwsProvider {
     // Extract extension
     const extension = path.extname(file.originalname);
     // Generate time stamp
-    const date = new Date().getTime().toString().trim();
+    const timeStamp = new Date().getTime().toString().trim();
     // Return file uuid
-    return `${name}-${date}-${uuidV4()}${extension}`;
+    return `${name}-${timeStamp}-${uuidV4()}${extension}`;
   }
 }
