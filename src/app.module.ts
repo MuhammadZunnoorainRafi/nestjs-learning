@@ -19,6 +19,7 @@ import { AccessTokenGuard } from './auth/guard/access-token.guard';
 import { AuthenticationGuard } from './auth/guard/authentication.guard';
 import { DataResponseInterceptor } from './common/interceptors/data-reponse.interceptor';
 import { UploadsModule } from './uploads/uploads.module';
+import { MailModule } from './mail/mail.module';
 
 const ENV = process.env.NODE_ENV;
 
@@ -39,7 +40,7 @@ const ENV = process.env.NODE_ENV;
       validationSchema: environmentValidation,
     }),
     TypeOrmModule.forRootAsync({
-      imports: [ConfigModule],
+      // imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({
         type: 'postgres',
@@ -54,6 +55,7 @@ const ENV = process.env.NODE_ENV;
     }),
     ConfigModule.forFeature(jwtConfig),
     JwtModule.registerAsync(jwtConfig.asProvider()),
+    MailModule,
   ],
   controllers: [AppController],
   providers: [

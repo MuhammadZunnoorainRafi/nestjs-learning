@@ -8,16 +8,14 @@ function App() {
         <header className="App-header">
           <GoogleLogin
             buttonText="Login"
-            onSuccess={(response) => {
-              fetch('http://localhost:3000/auth/google-authentication', {
+            onSuccess={async (response) => {
+              await fetch('http://localhost:3000/auth/google-authentication', {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({ token: response.credential }),
-              })
-                .then((res) => console.log(res))
-                .then((data) => console.log(data));
+              });
             }}
           />
         </header>

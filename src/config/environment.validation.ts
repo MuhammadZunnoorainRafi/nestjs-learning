@@ -21,4 +21,7 @@ export default joi.object({
   S3_SECRET_ACCESS_KEY: joi.string().required(),
   S3_ACCESS_KEY: joi.string().required(),
   IMAGE_BASE_URL: joi.string().required(),
+  MAIL_HOST: joi.string().required(),
+  SMTP_USERNAME: joi.string().required(),
+  SMTP_PASSWORD: joi.string().required(),
 });
