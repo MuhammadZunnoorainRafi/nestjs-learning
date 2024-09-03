@@ -4,23 +4,21 @@ import {
   RequestTimeoutException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { UsersService } from 'src/users/providers/users.service';
+import { ActiveUserType } from 'src/auth/types/ActiveUserType';
+import { PaginationProvider } from 'src/common/pagination/providers/pagination.service';
+import { TagsService } from 'src/tags/providers/tags.service';
 import { Repository } from 'typeorm';
 import { CreatePostDto } from '../dtos/create-posts.dto';
-import { Posts } from '../post.entity';
-import { TagsService } from 'src/tags/providers/tags.service';
-import { PatchPostDto } from '../dtos/patch-posts.dto';
 import { GetPostsQueryDto } from '../dtos/get-posts-query.dto';
-import { PaginationService } from 'src/common/pagination/providers/pagination.service';
-import { ActiveUserType } from 'src/auth/types/ActiveUserType';
+import { PatchPostDto } from '../dtos/patch-posts.dto';
+import { Posts } from '../post.entity';
 import { CreatePostProvider } from './create-post.provider';
 
 @Injectable()
 export class PostsService {
   constructor(
-    private readonly usersService: UsersService,
     private readonly tagsService: TagsService,
-    private readonly paginationService: PaginationService,
+    private readonly paginationProvider: PaginationProvider,
     @InjectRepository(Posts)
     private readonly postRepository: Repository<Posts>,
     private readonly createPostProvider: CreatePostProvider,
@@ -82,7 +80,7 @@ export class PostsService {
   }
 
   public async findAll(postQuery: GetPostsQueryDto) {
-    const posts = await this.paginationService.paginateQuery(
+    const posts = await this.paginationProvider.paginateQuery(
       { page: postQuery.page, limit: 2 },
       this.postRepository,
     );

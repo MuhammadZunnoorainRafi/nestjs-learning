@@ -30,16 +30,6 @@ import { GoogleAuthService } from './social/providers/google-auth.service';
     forwardRef(() => UsersModule),
     ConfigModule.forFeature(jwtConfig),
     JwtModule.registerAsync(jwtConfig.asProvider()),
-    // JwtModule.registerAsync({
-    //   imports: [ConfigModule],
-    //   inject: [ConfigService],
-    //   useFactory: (configService: ConfigService) => ({
-    //     secret: configService.get('jwt.secret'),
-    //     audience: configService.get('jwt.audience'),
-    //     issuer: configService.get('jwt.issuer'),
-    //     accessTokenTtl: configService.get('jwt.jwtAccessTokenTtl'),
-    //   }),
-    // }),
   ],
   exports: [AuthService, HashingProvider],
 })

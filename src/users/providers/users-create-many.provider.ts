@@ -1,12 +1,7 @@
+import { ConflictException, Injectable } from '@nestjs/common';
 import { DataSource } from 'typeorm';
-import { CreateUserDto } from '../dtos/create-users.dto';
-import { Users } from '../user.entity';
-import {
-  ConflictException,
-  Injectable,
-  RequestTimeoutException,
-} from '@nestjs/common';
 import { CreateManyUserDto } from '../dtos/create-many-users.dto';
+import { Users } from '../user.entity';
 
 @Injectable()
 export class UsersCreateManyProvider {

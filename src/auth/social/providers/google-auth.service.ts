@@ -1,9 +1,9 @@
 import {
-  BadRequestException,
   forwardRef,
   Inject,
   Injectable,
   OnModuleInit,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
 import { OAuth2Client } from 'google-auth-library';
@@ -40,7 +40,7 @@ export class GoogleAuthService implements OnModuleInit {
       const {
         email,
         sub: googleId,
-        name: firstName,
+        given_name: firstName,
         family_name: lastName,
       } = loginTicket.getPayload();
       // Find the user in the database using the GoogleId
@@ -60,7 +60,7 @@ export class GoogleAuthService implements OnModuleInit {
       }
     } catch (error) {
       console.log(error);
-      throw new BadRequestException('Internal Server Error');
+      throw new UnauthorizedException('Internal Server Error');
     }
   }
 }
