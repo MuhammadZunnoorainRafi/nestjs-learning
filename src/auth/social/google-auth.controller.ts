@@ -9,8 +9,7 @@ import { GoogleAuthService } from './providers/google-auth.service';
 export class GoogleAuthController {
   constructor(private readonly googleAuthService: GoogleAuthService) {}
   @Post()
-  public async authenticate(@Body() googleTokenDto: GoogleTokenDto) {
-    this.googleAuthService.onModuleInit();
-    return await this.googleAuthService.authenticate(googleTokenDto);
+  authenticate(@Body() googleTokenDto: GoogleTokenDto) {
+    return this.googleAuthService.authenticate(googleTokenDto);
   }
 }

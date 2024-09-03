@@ -25,6 +25,7 @@ import { UsersService } from './providers/users.service';
 @ApiTags('Users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
+
   @Get('/:id?')
   @ApiOperation({
     summary: 'Fetches a list of registered users on the application',
@@ -48,7 +49,7 @@ export class UsersController {
       'The position of the page number that you want the API to return',
     example: 1,
   })
-  getAll(
+  public getAll(
     @Param() getUserParamsDto: GetUserParamsDto,
     @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit: number,
     @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
@@ -58,9 +59,9 @@ export class UsersController {
 
   @Post()
   // @SetMetadata('authType', 'none')
-  @Auth(AuthType.None)
   @UseInterceptors(ClassSerializerInterceptor)
-  createUser(@Body() createUserDto: CreateUserDto) {
+  @Auth(AuthType.None)
+  public createUser(@Body() createUserDto: CreateUserDto) {
     return this.usersService.createUser(createUserDto);
   }
 
@@ -71,8 +72,7 @@ export class UsersController {
   }
 
   @Patch()
-  patchUser(@Body() patchUserDto: PatchUserDto) {
-    console.log(patchUserDto);
+  public patchUser(@Body() patchUserDto: PatchUserDto) {
     return patchUserDto;
   }
 }

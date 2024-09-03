@@ -1,24 +1,16 @@
-import {
-  forwardRef,
-  HttpException,
-  HttpStatus,
-  Inject,
-  Injectable,
-} from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { AuthService } from 'src/auth/providers/auth.service';
-import { PaginationService } from 'src/common/pagination/providers/pagination.service';
 import { Repository } from 'typeorm';
 import { CreateManyUserDto } from '../dtos/create-many-users.dto';
 import { CreateUserDto } from '../dtos/create-users.dto';
 import { GetUserParamsDto } from '../dtos/get-users-params.dto';
-import { Users } from '../user.entity';
-import { UsersCreateManyProvider } from './users-create-many.provider';
-import { CreatUserProvider } from './create-user.provider';
-import { FindOneUserProvider } from './find-one-user.provider';
-import { FindOneByGoogleId } from './find-one-by-google-id.provider';
 import { GoogleUserType } from '../types/google-user.type';
+import { Users } from '../user.entity';
 import { CreateGoogleUserProvider } from './create-google-user.provider';
+import { CreatUserProvider } from './create-user.provider';
+import { FindOneByGoogleId } from './find-one-by-google-id.provider';
+import { FindOneUserProvider } from './find-one-user.provider';
+import { UsersCreateManyProvider } from './users-create-many.provider';
 /**
  * Class to connect to users table and perform business operations
  */
@@ -26,12 +18,9 @@ import { CreateGoogleUserProvider } from './create-google-user.provider';
 @Injectable()
 export class UsersService {
   constructor(
-    @Inject(forwardRef(() => AuthService))
-    private readonly authService: AuthService,
     @InjectRepository(Users)
     private userRepository: Repository<Users>,
     private readonly usersCreateManyProvider: UsersCreateManyProvider,
-    private readonly paginationService: PaginationService,
     private readonly createUserProvider: CreatUserProvider,
     private readonly findOneUserProvider: FindOneUserProvider,
     private readonly findOneByGoogleIdProvider: FindOneByGoogleId,
@@ -50,27 +39,28 @@ export class UsersService {
     limit: number,
     page: number,
   ) {
-    try {
-      const response = await this.paginationService.paginateQuery(
-        { page, limit: 2 },
-        this.userRepository,
-      );
-      return response;
-    } catch (error) {
-      throw new HttpException(
-        {
-          status: HttpStatus.MOVED_PERMANENTLY,
-          error: 'The API endpoint does not exist',
-          fileName: 'users.service.ts',
-          lineNumber: 88,
-        },
-        HttpStatus.MOVED_PERMANENTLY,
-        {
-          cause: new Error(),
-          description: 'Occured because the API endpoint was permanently moved',
-        },
-      );
-    }
+    // try {
+    //   const response = await this.paginationService.paginateQuery(
+    //     { page, limit: 2 },
+    //     this.userRepository,
+    //   );
+    //   return response;
+    // } catch (error) {
+    //   throw new HttpException(
+    //     {
+    //       status: HttpStatus.MOVED_PERMANENTLY,
+    //       error: 'The API endpoint does not exist',
+    //       fileName: 'users.service.ts',
+    //       lineNumber: 88,
+    //     },
+    //     HttpStatus.MOVED_PERMANENTLY,
+    //     {
+    //       cause: new Error(),
+    //       description: 'Occured because the API endpoint was permanently moved',
+    //     },
+    //   );
+    // }
+    console.log('findAll user service');
   }
 
   /**
